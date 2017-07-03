@@ -9801,15 +9801,43 @@ var App = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            var styles = {
+                section: {
+                    height: '240px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontFamily: 'sans-serif',
+                    border: '1px solid gray'
+                },
+                h1: {
+                    margin: 0,
+                    marginBottom: '.5em',
+                    color: 'teal',
+                    fontWeight: 300,
+                    fontSize: '36px'
+                }
+            };
+
             return _react2.default.createElement(
-                'div',
-                null,
+                'section',
+                { style: styles.section },
                 _react2.default.createElement(
                     'h1',
-                    null,
+                    { style: styles.h1 },
                     'Form App'
                 ),
-                _react2.default.createElement(_DataForm2.default, { onMessage: this.handleMessage.bind(this) })
+                _react2.default.createElement(_DataForm2.default, { onMessage: this.handleMessage.bind(this) }),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        { style: { color: 'gray' } },
+                        'height: 240px, width: 100%'
+                    )
+                )
             );
         }
     }]);
@@ -9861,22 +9889,46 @@ function Inputs(_ref) {
         onChange = _ref.onChange,
         disabled = _ref.disabled;
 
+    var styleSelect = {
+        container: {
+            display: 'flex'
+        },
+        item: {
+            marginRight: '5px'
+        },
+        h1: {
+            margin: 0,
+            fontWeight: 300
+        },
+        select: {
+            width: '100%',
+            color: 'gray'
+        },
+        button: {
+            display: 'flex',
+            alignItems: 'flex-end'
+        }
+    };
     var listOption = options.map(function (option) {
         return _react2.default.createElement(
-            "label",
-            { key: option.name, htmlFor: option.name },
-            option.name,
+            'div',
+            { style: styleSelect.item, key: option.name },
             _react2.default.createElement(
-                "select",
-                { name: option.name, id: option.name, onChange: onChange, disabled: option.disabled },
+                'label',
+                { htmlFor: option.name, style: styleSelect.h1 },
+                option.name
+            ),
+            _react2.default.createElement(
+                'select',
+                { style: styleSelect.select, name: option.name, id: option.name, onChange: onChange, disabled: option.disabled },
                 _react2.default.createElement(
-                    "option",
-                    { value: "" },
-                    "Seleccionar"
+                    'option',
+                    { value: '' },
+                    'Seleccionar'
                 ),
                 option.option.map(function (val) {
                     return _react2.default.createElement(
-                        "option",
+                        'option',
                         { key: val, value: val },
                         val
                     );
@@ -9886,13 +9938,17 @@ function Inputs(_ref) {
     });
 
     return _react2.default.createElement(
-        "div",
-        null,
+        'div',
+        { style: styleSelect.container },
         listOption,
         _react2.default.createElement(
-            "button",
-            { type: "submit", disabled: disabled },
-            "Add"
+            'div',
+            { style: styleSelect.button },
+            _react2.default.createElement(
+                'button',
+                { style: { padding: '2px 5px', background: disabled.color, border: 'none', color: 'white' }, type: 'submit', disabled: disabled.value },
+                'Add'
+            )
         )
     );
 }
@@ -9907,14 +9963,16 @@ var DataForm = function (_Component) {
 
         _this.state = {
             name: '',
-            lastname: ''
+            lastname: '',
+            job: '',
+            service: ''
         };
         _this.handleInputChange = _this.handleInputChange.bind(_this);
         return _this;
     }
 
     _createClass(DataForm, [{
-        key: "handleInputChange",
+        key: 'handleInputChange',
         value: function handleInputChange(e) {
             var target = e.target;
             var value = target.value;
@@ -9923,23 +9981,27 @@ var DataForm = function (_Component) {
             this.setState(_defineProperty({}, name, value));
         }
     }, {
-        key: "onSubmit",
+        key: 'onSubmit',
         value: function onSubmit(e) {
             var message = {
                 name: this.state.name,
-                lastname: this.state.lastname
+                lastname: this.state.lastname,
+                job: this.state.lastname,
+                service: this.state.lastname
             };
 
             e.preventDefault();
             this.props.onMessage(message);
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
+            var styleForm = {};
+
             return _react2.default.createElement(
-                "form",
-                { onSubmit: this.onSubmit.bind(this), autoComplete: "off" },
-                _react2.default.createElement(Inputs, { options: [{ name: "name", option: ["Services", "serc"], disabled: false }, { name: "lastname", option: ["Serasdasd", "asd"], disabled: this.state.name ? false : true }], onChange: this.handleInputChange, disabled: this.state.lastname ? false : true })
+                'form',
+                { style: styleForm.form, onSubmit: this.onSubmit.bind(this), autoComplete: 'off' },
+                _react2.default.createElement(Inputs, { options: [{ name: "name", option: ["Services", "serc"], disabled: false }, { name: "lastname", option: ["Serasdasd", "asd"], disabled: this.state.name ? false : true }, { name: "job", option: ["Serasdasd", "asd"], disabled: this.state.lastname ? false : true }, { name: "service", option: ["Serasdasd", "asd"], disabled: this.state.job ? false : true }], onChange: this.handleInputChange, disabled: this.state.service ? { value: false, color: 'teal' } : { value: true } })
             );
         }
     }]);
