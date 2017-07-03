@@ -1,9 +1,21 @@
 import React, { Component } from 'react'
+import DataForm from './DataForm.jsx'
 
-class App extends Component {
+class App extends Component {  
+    constructor(props) {
+        super(props)
+    } 
+
+    handleMessage(message) {
+        console.log(message)
+    }
+
     render() {
         return (
-            <h1> Mi app</h1>
+            <div>
+                <h1>Form App</h1>
+                <DataForm  onMessage={this.handleMessage.bind(this)}/>
+            </div>
         )
     }
 }
